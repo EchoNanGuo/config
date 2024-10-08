@@ -1,0 +1,8 @@
+# 键位
+alias neo='neofetch --ascii ~/.config/neofetch/ascii-art-neofetch/communist | lolcat'
+alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
+alias dis='docker images'
+alias ra='yazi'
+
+# 环境变量
+export EDITOR='vim'

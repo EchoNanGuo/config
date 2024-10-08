@@ -1,2 +1,2 @@
-TAGS="zsh i3 alacritty rofi picom ranger vim neofetch"
+TAGS="i3 kitty rofi picom vim neofetch"
 EXCLUDES=""
