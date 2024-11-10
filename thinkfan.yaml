@@ -1,16 +1,4 @@
 sensors:
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp6_input
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp3_input
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp7_input
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp4_input
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp8_input
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp1_input
-  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp5_input
-  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp3_input
-  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp4_input
-  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp1_input
-  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp5_input
-  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp2_input
   - hwmon: /sys/devices/virtual/thermal/thermal_zone6/hwmon8/temp1_input
 
 fans:
