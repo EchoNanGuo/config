@@ -1,14 +1,26 @@
 sensors:
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp6_input
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp3_input
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp7_input
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp4_input
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp8_input
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp1_input
+  - hwmon: /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon6/temp5_input
+  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp3_input
+  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp4_input
+  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp1_input
+  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp5_input
+  - hwmon: /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp2_input
+  - hwmon: /sys/devices/virtual/thermal/thermal_zone2/hwmon4/temp1_input
+  - hwmon: /sys/devices/virtual/thermal/thermal_zone3/hwmon5/temp1_input
   - hwmon: /sys/devices/virtual/thermal/thermal_zone6/hwmon8/temp1_input
-
 fans:
   - tpacpi: /proc/acpi/ibm/fan
 
 levels:
-  - [0, 0, 45]     # 温度低于45°C，风扇关闭
-  - [1, 45, 55]    # 温度在45°C到55°C之间，风扇自动调节
-  - [2, 55, 65]    # 温度在55°C到65°C之间，风扇运行在1级速度
-  - [3, 65, 75]    # 温度在65°C到75°C之间，风扇运行在2级速度
-  - [4, 75, 85]    # 温度在75°C到85°C之间，风扇运行在3级速度
-  - [5, 85, 255]   # 温度超过85°C，风扇全速运行
-
+  - [0, 0, 55]
+  - [1, 55, 60]
+  - [2, 60, 65]
+  - [3, 65, 70]
+  - [4, 70, 75]
+  - [5, 75, 255]
