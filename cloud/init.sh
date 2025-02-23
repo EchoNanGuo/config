@@ -143,6 +143,8 @@ server {
     }
 }' > ~/nginx/conf/conf.d/default.conf
 
+mkdir x-ui && cd x-ui
+
 echo "所需的文件已成功创建！"
 
 

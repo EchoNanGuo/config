@@ -1,28 +1,28 @@
-version: '3.8'
+version: "3.8"
 
 services:
   redis:
     image: redis:latest
-    restart: always 
+    restart: always
     container_name: redis
     ports:
       - "6379:6379"
     networks:
-      - nanguo_net 
+      - nanguo_net
 
   mysql:
     image: mysql:latest
-    restart: always 
+    restart: always
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${PASSWD}
+      MYSQL_ROOT_PASSWORD: ${PASSWD} # 从环境变量注入密码[10,12](@ref)
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql/data:/var/lib/mysql
-      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/data:/var/lib/mysql # 数据持久化
+      - ./mysql/conf:/etc/mysql/conf.d # 自定义配置
     networks:
-      - nanguo_net 
+      - nanguo_net
 
   nginx:
     image: nginx:latest
@@ -32,10 +32,32 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/conf:/etc/nginx
-      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/conf:/etc/nginx # Nginx 配置目录
+      - ./nginx/html:/usr/share/nginx/html # 静态资源目录
     networks:
-      - nanguo_net 
+      - nanguo_net
+
+  solo:
+    image: b3log/solo
+    container_name: solo
+    restart: always
+    environment:
+      - RUNTIME_DB=MYSQL
+      - JDBC_USERNAME=root
+      - JDBC_PASSWORD=${PASSWD} # 复用全局密码变量[12](@ref)
+      - JDBC_DRIVER=com.mysql.cj.jdbc.Driver
+      - JDBC_URL=jdbc:mysql://mysql:3306/solo?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    command: --listen_port=8080 --server_scheme=https --server_host=nanguomm.top --server_port=443
+    networks:
+      - nanguo_net # 加入统一网络实现服务发现[8,9](@ref)
+
+  x-ui:
+    image: enwaiax/x-ui:latest
+    container_name: x-ui
+    restart: always
+    volumes:
+      - ./db:/etc/x-ui # 挂载配置文件目录
+      - ./cert:/root/cert # 挂载 SSL 证书目录
 
 networks:
   nanguo_net:
