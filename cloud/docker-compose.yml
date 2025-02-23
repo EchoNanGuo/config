@@ -15,7 +15,7 @@ services:
     restart: always
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${PASSWD} # 从环境变量注入密码[10,12](@ref)
+      MYSQL_ROOT_PASSWORD: ${PASSWD} # 从环境变量注入密码
     ports:
       - "3306:3306"
     volumes:
@@ -31,6 +31,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "10000:10000"
     volumes:
       - ./nginx/conf:/etc/nginx # Nginx 配置目录
       - ./nginx/html:/usr/share/nginx/html # 静态资源目录
@@ -44,12 +45,12 @@ services:
     environment:
       - RUNTIME_DB=MYSQL
       - JDBC_USERNAME=root
-      - JDBC_PASSWORD=${PASSWD} # 复用全局密码变量[12](@ref)
+      - JDBC_PASSWORD=${PASSWD} # 复用全局密码变量
       - JDBC_DRIVER=com.mysql.cj.jdbc.Driver
       - JDBC_URL=jdbc:mysql://mysql:3306/solo?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     command: --listen_port=8080 --server_scheme=https --server_host=nanguomm.top --server_port=443
     networks:
-      - nanguo # 加入统一网络实现服务发现[8,9](@ref)
+      - nanguo # 加入统一网络实现服务发现
 
   x-ui:
     image: enwaiax/x-ui:latest
@@ -59,7 +60,7 @@ services:
       - ./x-ui/db:/etc/x-ui # 挂载配置文件目录
       - ./x-ui/cert:/root/cert # 挂载 SSL 证书目录
     networks:
-      - nanguo # 加入统一网络实现服务发现[8,9](@ref)
+      - nanguo # 加入统一网络实现服务发现
 
 networks:
   nanguo:
