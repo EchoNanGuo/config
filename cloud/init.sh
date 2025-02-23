@@ -7,7 +7,7 @@ mkdir -p ~/nginx/conf/certs
 mkdir -p ~/nginx/conf/conf.d
 mkdir -p ~/nginx/html
 
-echo "types {
+echo 'types {
     text/html                                        html htm shtml;
     text/css                                         css;
     text/xml                                         xml;
@@ -104,9 +104,9 @@ echo "types {
     video/x-ms-asf                                   asx asf;
     video/x-ms-wmv                                   wmv;
     video/x-msvideo                                  avi;
-}" > ~/nginx/conf/mime.types
+}' > ~/nginx/conf/mime.types
 
-echo "worker_processes  1;
+echo 'worker_processes  1;
 
 events {
     worker_connections  1024;
@@ -120,9 +120,9 @@ http {
     keepalive_timeout  65;
 
     include /etc/nginx/conf.d/*.conf;
-}" > ~/nginx/conf/nginx.conf
+}' > ~/nginx/conf/nginx.conf
 
-echo "server {
+echo 'server {
     listen 80;
     server_name nanguomm.top;
     return 301 https://$host$request_uri;
@@ -141,7 +141,7 @@ server {
 			proxy_pass http://solo:8080;
 			client_max_body_size 20000m;
     }
-}" > ~/nginx/conf/conf.d/default.conf
+}' > ~/nginx/conf/conf.d/default.conf
 
 echo "所需的文件已成功创建！"
 
