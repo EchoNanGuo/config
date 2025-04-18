@@ -7,6 +7,9 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=${DB_PASSWD}  # 通过环境变量设置密码
+    command: redis-server --requirepass $$REDIS_PASSWORD --bind 0.0.0.0  # 允许公网访问
     networks:
       - nanguo
 
@@ -15,7 +18,7 @@ services:
     container_name: mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${PASSWD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
       TZ: Asia/Shanghai
     ports:
       - "3306:3306"
@@ -40,7 +43,7 @@ services:
       - MYSQL_SERVICE_PORT=3306
       - MYSQL_SERVICE_DB_NAME=nacos
       - MYSQL_SERVICE_USER=root
-      - MYSQL_SERVICE_PASSWORD=${PASSWD}
+      - MYSQL_SERVICE_PASSWORD=${DB_PASSWD}
     depends_on:
       - mysql
     networks:
