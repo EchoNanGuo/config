@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - nanguo
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PASSWD}
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+    networks:
+      - nanguo
+
+  nacos:
+    image: nacos/nacos-server:v2.1.0
+    container_name: nacos
+    restart: unless-stopped
+    ports:
+      - "8848:8848"
+    environment:
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql  # 使用服务名代替IP
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_DB_NAME=nacos
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=${PASSWD}
+    depends_on:
+      - mysql
+    networks:
+      - nanguo
+
+  rabbitmq:
+    image: rabbitmq:3.7.2
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"  # AMQP协议端口
+      - "15672:15672"  # 管理界面端口
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER:-guest}  # 默认用户名（可替换）
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS:-guest}  # 默认密码（可替换）
+    volumes:
+      - ./rabbitmq/data:/var/lib/rabbitmq  # 持久化数据
+    networks:
+      - nanguo
+
+networks:
+  nanguo:
+    driver: bridge
